@@ -8,15 +8,20 @@ namespace Chip8Emulator.Memory
 {
     public class RandomAccessMemory
     {
-        byte[] MemoryRegisters;
+        private byte[] MemoryRegisters;
+        private Stack<ushort> MemoryRegistersStack;
+
         private ushort IndexRegister;
         private ushort ProgramCounter;
-
+        
         public RandomAccessMemory(byte[] fonts)
         {
             //Memory is 4K, should length by 4096 or 512?
             MemoryRegisters = new byte[4096];
+            MemoryRegistersStack = new Stack<ushort>();
+            
             IndexRegister = 0;
+
             //Program Counter starts at 0x200
             ProgramCounter = 0x200;
 
@@ -26,6 +31,11 @@ namespace Chip8Emulator.Memory
         public ushort GetIndexRegister()
         {
             return IndexRegister;
+        }
+        
+        public ushort GetProgramCounter()
+        {
+            return ProgramCounter;
         }
 
         public void SetIndexRegister(ushort value)
@@ -43,6 +53,16 @@ namespace Chip8Emulator.Memory
             return MemoryRegisters[location];
         }
 
+        public void StoreInMemory(int location, byte value)
+        {
+            MemoryRegisters[location] = value;
+        }
+
+
+        /// <summary>
+        /// Set the ProgramCounter to a specific memory locations
+        /// </summary>
+        /// <param name="location"></param>
         public void JumpTo(ushort location)
         {
             ProgramCounter += location;
@@ -50,7 +70,7 @@ namespace Chip8Emulator.Memory
 
         public void LoadProgramIntoMemory(byte[] program)
         {
-            for (var i = 0; i < program.Length; ++i)
+            for (var i = 0; i < program.Length; i++)
             {
                 //Load into memory after 0x200 which is 512
                 MemoryRegisters[i + 512] = program[i];
@@ -59,7 +79,7 @@ namespace Chip8Emulator.Memory
 
         public ushort FetchOpcode()
         {
-            return (ushort)((MemoryRegisters[ProgramCounter] << 8 | MemoryRegisters[ProgramCounter + 1]));
+            return (ushort)(MemoryRegisters[ProgramCounter] << 8 | MemoryRegisters[ProgramCounter + 1]);
         }
 
         public void LoadFonts(byte[] fonts)
@@ -68,6 +88,16 @@ namespace Chip8Emulator.Memory
             {
                 MemoryRegisters[i] = fonts[i];
             }
+        }
+
+        public void Push(ushort item)
+        {
+            MemoryRegistersStack.Push(item);
+        }
+
+        public ushort Pop()
+        {
+            return MemoryRegistersStack.Pop();
         }
     }
 }

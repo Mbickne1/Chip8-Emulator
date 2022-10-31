@@ -1,3 +1,4 @@
+using Chip8Emulator.Chip_8.Keyboard;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -14,18 +15,30 @@ namespace Chip8Emulator
 
         private readonly Bitmap _screen;
         private readonly EmulatorController _emulatorController;
+        private Keyboard _keyboard;
         public Screen()
         {
             InitializeComponent();
-
+            pBox.KeyDown += PBox_KeyDown;
+            pBox.KeyUp += PBox_KeyUp;
             _screen = new Bitmap(WIDTH, HEIGHT);
             
             pixelOff = Color.Black;
             pixelOn = Color.White;
 
-            _emulatorController = new EmulatorController(this);
+            _keyboard = new Keyboard();
+            _emulatorController = new EmulatorController(this, _keyboard);
         }
 
+        private void PBox_KeyDown(object sender, KeyEventArgs args)
+        {
+            _keyboard.KeyPressed(args);
+        }
+
+        private void PBox_KeyUp(object sender, KeyEventArgs args)
+        {
+            _keyboard.KeyUp(args);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -88,7 +101,6 @@ namespace Chip8Emulator
                 _screen.SetPixel(row, col, pixelOff);
             }
         }
-
 
         public int GetWidth()
         {

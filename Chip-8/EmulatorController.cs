@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Chip8Emulator.Memory;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.Runtime.CompilerServices;
+using Chip8Emulator.Chip_8.Keyboard;
 
 namespace Chip8Emulator
 {
@@ -17,28 +19,35 @@ namespace Chip8Emulator
         public byte[,] displayBuffer;
         private bool drawFlag;
 
+        private byte DelayTimer;
+
         // For timing..
         readonly Stopwatch stopWatch = Stopwatch.StartNew();
         readonly TimeSpan targetElapsedTime60Hz = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 60);
         readonly TimeSpan targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 1000);
         TimeSpan lastTime;
+
         //Differnt Componenets of the Chip8
-        readonly Instructions _instructions;
-        readonly CPU _cpu;
-        readonly RandomAccessMemory _randomAccessMemory;
-        readonly Screen _screen;
+        private readonly Instructions _instructions;
+        private readonly CPU _cpu;
+        private readonly RandomAccessMemory _randomAccessMemory;
+        private readonly Screen _screen;
+        private readonly Keyboard _keyboard;
         //This will need to be changed, also made variable for different roms
-        string program = "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip-8\\ROMS\\IBM.ch8";
-        public EmulatorController(Screen screen)
+        string program = "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip-8\\ROMS\\PONG.ch8";
+        public EmulatorController(Screen screen, Keyboard keyboard)
         {
             _screen = screen;
+            _keyboard = keyboard;
             _randomAccessMemory = new RandomAccessMemory(fontSet);
             _cpu = new CPU();
-            _instructions = new Instructions(this, _cpu, _randomAccessMemory, _screen);
-
+            _instructions = new Instructions(this, _cpu, _randomAccessMemory, _screen, _keyboard);
+           
             //displayBuffer = new byte[_screen.GetWidth(), _screen.GetHeight()];
             displayBuffer = new byte[64, 32];
             drawFlag = false;
+
+            DelayTimer = 0;
 
             LoadProgram(program);
         }
@@ -46,6 +55,16 @@ namespace Chip8Emulator
         public void SetDrawFlag(bool value)
         {
             drawFlag = value;
+        }
+
+        public void SetDelayTimer(byte delay)
+        {
+            DelayTimer = delay;
+        }
+
+        public byte GetDelayTimer()
+        {
+            return DelayTimer;
         }
 
         public Task Tick()
@@ -67,6 +86,11 @@ namespace Chip8Emulator
 
         public void Tick60Hz()
         {
+            if(DelayTimer > 0)
+            {
+                DelayTimer--;
+            }
+
             if(drawFlag)
             {
                 drawFlag = false;
