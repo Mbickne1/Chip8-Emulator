@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Chip8Emulator.Memory;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Runtime.CompilerServices;
-using Chip8Emulator.Chip_8.Keyboard;
 
 namespace Chip8Emulator
 {

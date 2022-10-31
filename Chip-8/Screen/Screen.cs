@@ -1,4 +1,3 @@
-using Chip8Emulator.Chip_8.Keyboard;
 using System.Diagnostics;
 using System.Windows.Forms;
 

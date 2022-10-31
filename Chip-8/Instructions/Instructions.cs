@@ -7,8 +7,6 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using Chip8Emulator.Chip_8.Keyboard;
-using Chip8Emulator.Memory;
 
 namespace Chip8Emulator.OpCodes
 {
