@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "mUaJvFt53vqFJ7qJHIWkRUj30ghVsP5V2O/QaROD7CAjXLi6MA8vYfctChJQqcmjGizmJVWTfnfex53qmE2EAQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip8Emulator.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://promesspackageserver/MicroSoft/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
