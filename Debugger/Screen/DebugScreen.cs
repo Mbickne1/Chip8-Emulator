@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Chip8Emulator.Debugger
 {
-    public partial class Form1 : Form
+    public partial class DebugScreen : Form
     {
-        public Form1()
+        public DebugScreen()
         {
             InitializeComponent();
         }

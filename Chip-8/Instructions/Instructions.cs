@@ -144,8 +144,8 @@ namespace Chip8Emulator.OpCodes
         private void SkipWhenEqual(Opcode _opcode)
         {
             byte X = (byte)(_opcode.GetOpcode() & 0x0F00);
-            byte Y = (byte)(_opcode.GetOpcode() & 0x00F0);
-
+            byte Y = (byte)((_opcode.GetOpcode() & 0x00F0) >> 4); // << 16
+            Debug.WriteLine("Y: " + Y);
             byte VX = _cpu.GetRegisterValue(X);
             byte VY = _cpu.GetRegisterValue(Y);
 
@@ -233,7 +233,7 @@ namespace Chip8Emulator.OpCodes
         private void SkipWhenNotEqual(Opcode _opcode)
         {
             byte X = (byte)(_opcode.GetOpcode() & 0x0F00);
-            byte Y = (byte)(_opcode.GetOpcode() & 0x00F0);
+            byte Y = (byte)((_opcode.GetOpcode() & 0x00F0) >> 4);
 
             byte VX = _cpu.GetRegisterValue(X);
             byte VY = _cpu.GetRegisterValue(Y);

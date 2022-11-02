@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Debugger
+namespace ChipEightTests.Screen
 {
-    public class Debugger
+    internal class Class1
     {
-        
     }
 }

@@ -32,7 +32,7 @@ namespace Chip8Emulator
         private readonly Screen _screen;
         private readonly Keyboard _keyboard;
         //This will need to be changed, also made variable for different roms
-        string program = "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip-8\\ROMS\\PONG.ch8";
+        string program = "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip-8\\ROMS\\IBM.ch8";
         public EmulatorController(Screen screen, Keyboard keyboard)
         {
             _screen = screen;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Chip8Emulator
 {
@@ -65,7 +66,9 @@ namespace Chip8Emulator
         /// <param name="location"></param>
         public void JumpTo(ushort location)
         {
-            ProgramCounter += location;
+            ProgramCounter = location;
+            Debug.WriteLine("Program Counter: " + ProgramCounter);
+            //Debug.WriteLine(MemoryRegisters[location]);
         }
 
         public void LoadProgramIntoMemory(byte[] program)

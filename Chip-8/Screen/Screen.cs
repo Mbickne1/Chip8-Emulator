@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Windows.Forms;
+using Chip8Emulator.Debugger;
 
 namespace Chip8Emulator
 {
@@ -18,8 +19,11 @@ namespace Chip8Emulator
         public Screen()
         {
             InitializeComponent();
+
             pBox.KeyDown += PBox_KeyDown;
             pBox.KeyUp += PBox_KeyUp;
+            this.Load += Screen_Load;
+
             _screen = new Bitmap(WIDTH, HEIGHT);
             
             pixelOff = Color.Black;
@@ -41,7 +45,15 @@ namespace Chip8Emulator
 
         protected override void OnLoad(EventArgs e)
         {
+            DebugScreen debugger = new DebugScreen();
+            debugger.Show();
             Task.Run(_emulatorController.EmulationLoop);
+        }
+
+        private void Screen_Load(object sender, EventArgs e)
+        {
+            DebugScreen debugger = new DebugScreen();
+            debugger.Show();
         }
 
         public void Clear()
