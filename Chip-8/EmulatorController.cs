@@ -29,18 +29,18 @@ namespace Chip8Emulator
         private readonly Instructions _instructions;
         private readonly CPU _cpu;
         private readonly RandomAccessMemory _randomAccessMemory;
-        private readonly Screen _screen;
+        private readonly GUI _screen;
         private readonly Keyboard _keyboard;
         //This will need to be changed, also made variable for different roms
         string program = "C:\\Users\\Matthew.bicknell\\DEVELOPMENT\\Chip8Emulator\\Chip-8\\ROMS\\IBM.ch8";
-        public EmulatorController(Screen screen, Keyboard keyboard)
+        public EmulatorController(GUI screen, Keyboard keyboard)
         {
             _screen = screen;
             _keyboard = keyboard;
             _randomAccessMemory = new RandomAccessMemory(fontSet);
             _cpu = new CPU();
-            _instructions = new Instructions(this, _cpu, _randomAccessMemory, _screen, _keyboard);
-           
+            _instructions = new Instructions(this);
+
             //displayBuffer = new byte[_screen.GetWidth(), _screen.GetHeight()];
             displayBuffer = new byte[64, 32];
             drawFlag = false;
@@ -48,6 +48,31 @@ namespace Chip8Emulator
             DelayTimer = 0;
 
             LoadProgram(program);
+        }
+
+        public GUI GetScreen()
+        {
+            return _screen;
+        }
+
+        public Keyboard GetKeyboard()
+        {
+            return _keyboard;
+        }
+
+        public RandomAccessMemory GetMemory()
+        {
+            return _randomAccessMemory;
+        }
+
+        public CPU GetCPU()
+        {
+            return _cpu;
+        }
+
+        public bool GetDrawFlag()
+        {
+            return drawFlag;
         }
 
         public void SetDrawFlag(bool value)

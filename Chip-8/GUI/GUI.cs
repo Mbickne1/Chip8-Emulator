@@ -4,7 +4,7 @@ using Chip8Emulator.Debugger;
 
 namespace Chip8Emulator
 {
-    public partial class Screen : Form
+    public partial class GUI : Form
     {
         private readonly int WIDTH = 1280; //40x the original 64x32 screen size. 
         private readonly int HEIGHT = 640;
@@ -16,7 +16,7 @@ namespace Chip8Emulator
         private readonly Bitmap _screen;
         private readonly EmulatorController _emulatorController;
         private Keyboard _keyboard;
-        public Screen()
+        public GUI()
         {
             InitializeComponent();
 

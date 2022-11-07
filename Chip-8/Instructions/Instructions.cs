@@ -18,21 +18,16 @@ namespace Chip8Emulator.OpCodes
         private EmulatorController _controller;
         private readonly CPU _cpu;
         private readonly RandomAccessMemory _randomAccessMemory;
-        private readonly Screen _screen;
+        private readonly GUI _screen;
         private readonly Keyboard _keyboard;
 
-        public Instructions(
-            EmulatorController controller, 
-            CPU cpu, 
-            RandomAccessMemory randomAcessMemory,
-            Screen screen,
-            Keyboard keyboard
-        )
+        public Instructions(EmulatorController controller)
         {
-            _cpu = cpu;
-            _randomAccessMemory = randomAcessMemory;
-            _screen = screen;
-            _keyboard = keyboard;
+            _cpu = controller.GetCPU();
+            _randomAccessMemory = controller.GetMemory();
+            _screen = controller.GetScreen();
+            _keyboard = controller.GetKeyboard();
+
             _instructions = new Dictionary<byte, Action<Opcode>>
             {
                 {0x0, ClearScreen},
