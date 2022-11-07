@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chip8Emulator.Chip_8.Keyboard
+namespace Chip8Emulator
 {
     public class Keyboard
     {

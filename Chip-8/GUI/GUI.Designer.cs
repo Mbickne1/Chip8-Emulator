@@ -2,7 +2,7 @@
 
 namespace Chip8Emulator
 {
-    partial class Screen
+    partial class GUI
     {
         /// <summary>
         ///  Required designer variable.

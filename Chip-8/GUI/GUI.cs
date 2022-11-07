@@ -1,10 +1,10 @@
-using Chip8Emulator.Chip_8.Keyboard;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Chip8Emulator.Debugger;
 
 namespace Chip8Emulator
 {
-    public partial class Screen : Form
+    public partial class GUI : Form
     {
         private readonly int WIDTH = 1280; //40x the original 64x32 screen size. 
         private readonly int HEIGHT = 640;
@@ -16,11 +16,14 @@ namespace Chip8Emulator
         private readonly Bitmap _screen;
         private readonly EmulatorController _emulatorController;
         private Keyboard _keyboard;
-        public Screen()
+        public GUI()
         {
             InitializeComponent();
+
             pBox.KeyDown += PBox_KeyDown;
             pBox.KeyUp += PBox_KeyUp;
+            this.Load += Screen_Load;
+
             _screen = new Bitmap(WIDTH, HEIGHT);
             
             pixelOff = Color.Black;
@@ -42,7 +45,15 @@ namespace Chip8Emulator
 
         protected override void OnLoad(EventArgs e)
         {
+            DebugScreen debugger = new DebugScreen();
+            debugger.Show();
             Task.Run(_emulatorController.EmulationLoop);
+        }
+
+        private void Screen_Load(object sender, EventArgs e)
+        {
+            DebugScreen debugger = new DebugScreen();
+            debugger.Show();
         }
 
         public void Clear()

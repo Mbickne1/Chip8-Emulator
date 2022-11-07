@@ -7,8 +7,6 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using Chip8Emulator.Chip_8.Keyboard;
-using Chip8Emulator.Memory;
 
 namespace Chip8Emulator.OpCodes
 {
@@ -20,21 +18,16 @@ namespace Chip8Emulator.OpCodes
         private EmulatorController _controller;
         private readonly CPU _cpu;
         private readonly RandomAccessMemory _randomAccessMemory;
-        private readonly Screen _screen;
+        private readonly GUI _screen;
         private readonly Keyboard _keyboard;
 
-        public Instructions(
-            EmulatorController controller, 
-            CPU cpu, 
-            RandomAccessMemory randomAcessMemory,
-            Screen screen,
-            Keyboard keyboard
-        )
+        public Instructions(EmulatorController controller)
         {
-            _cpu = cpu;
-            _randomAccessMemory = randomAcessMemory;
-            _screen = screen;
-            _keyboard = keyboard;
+            _cpu = controller.GetCPU();
+            _randomAccessMemory = controller.GetMemory();
+            _screen = controller.GetScreen();
+            _keyboard = controller.GetKeyboard();
+
             _instructions = new Dictionary<byte, Action<Opcode>>
             {
                 {0x0, ClearScreen},
@@ -146,8 +139,8 @@ namespace Chip8Emulator.OpCodes
         private void SkipWhenEqual(Opcode _opcode)
         {
             byte X = (byte)(_opcode.GetOpcode() & 0x0F00);
-            byte Y = (byte)(_opcode.GetOpcode() & 0x00F0);
-
+            byte Y = (byte)((_opcode.GetOpcode() & 0x00F0) >> 4); // << 16
+            Debug.WriteLine("Y: " + Y);
             byte VX = _cpu.GetRegisterValue(X);
             byte VY = _cpu.GetRegisterValue(Y);
 
@@ -235,7 +228,7 @@ namespace Chip8Emulator.OpCodes
         private void SkipWhenNotEqual(Opcode _opcode)
         {
             byte X = (byte)(_opcode.GetOpcode() & 0x0F00);
-            byte Y = (byte)(_opcode.GetOpcode() & 0x00F0);
+            byte Y = (byte)((_opcode.GetOpcode() & 0x00F0) >> 4);
 
             byte VX = _cpu.GetRegisterValue(X);
             byte VY = _cpu.GetRegisterValue(Y);

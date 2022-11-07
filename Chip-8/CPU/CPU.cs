@@ -20,7 +20,7 @@ namespace Chip8Emulator
 
         public byte GetRegisterValue(int index)
         {
-            //Debug.WriteLine(index);
+            Debug.WriteLine("Index: " + index);
             return Registers[index];
         }
 
